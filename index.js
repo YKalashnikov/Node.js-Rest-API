@@ -6,14 +6,16 @@ const server = restify.createServer();
 
 server.use(restify.plugins.bodyParser());
 
-server.listen(config.PORT, () => {
+server.listen(config.PORT, function() {
     mongoose.connect(config.MONGODB_URI,
     { useNewUrlParser: true})
 });
 
 const db = mongoose.connection;
 
-db.on('error', err => console.log(err));
+db.on('error', function(){ 
+    console.log(err)
+});
 
 db.once('open', () => {
     require('./routes/customers')(server);
