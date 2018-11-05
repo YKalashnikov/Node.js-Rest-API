@@ -61,9 +61,22 @@ module.exports = server => {
               next();
            } catch(err) {
                 return next(new errors.ResourceNotFoundError(
-                    `There is no customer with the id ${id}`))
+                    `There is no customer with the id ${id}`));
             }
       })
+
+      //Delete a customer
+       server.del('/customers/:id', async (req, res, next) => {
+           const id = req.params._id
+           try {
+             const customer = await Customer.findOneAndDelete(id)
+             res.send(204);
+             next();
+           } catch(err) {
+               return next(new errors.ResourceNotFoundError(`There is no customer with the id ${id}`));
+           }
+       })
+
     
 }
       
