@@ -7,6 +7,7 @@ const server = restify.createServer();
 server.use(restify.plugins.bodyParser());
 
 server.listen(config.PORT, function() {
+    mongoose.set('useFindAndModify', false);
     mongoose.connect(config.MONGODB_URI,
     { useNewUrlParser: true})
 });
@@ -19,5 +20,6 @@ db.on('error', function(){
 
 db.once('open', () => {
     require('./routes/customers')(server);
+    require('./routes/users')(server);
     console.log(`Server started on the server ${config.PORT}`);
 }); 

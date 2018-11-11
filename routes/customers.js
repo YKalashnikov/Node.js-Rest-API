@@ -23,7 +23,7 @@ module.exports = server => {
            }
            catch(err) {
                return next(new errors.ResourceNotFoundError(
-                   `There is no custome rwith the id ${req.params.id}`
+                   `There is no customer with the id ${req.params.id}`
                ));
            }
        })
@@ -54,9 +54,9 @@ module.exports = server => {
           if(!req.is('application/json')) {
               return res.send(new errors.InvalidContentError('Expect application/json'))
           }
-          const id = req.params._id;
+          const _id = req.params.id;
           try {
-              const customer = await Customer.findOneAndUpdate({id}, req.body)
+              const customer = await Customer.findOneAndUpdate({_id}, req.body)
               res.send(200);
               next();
            } catch(err) {
